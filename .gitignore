@@ -5,3 +5,4 @@
 src/stan_files/*.o
 src/stan_files/*.hpp
 src/*.so
+notebooks/.ipynb_checkpoints/*

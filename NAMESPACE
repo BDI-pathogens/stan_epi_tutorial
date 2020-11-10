@@ -1,7 +1,8 @@
 # constants exposed by package
 
 # functions exposed by package
-export( stanepi )
+export( stanepi.uk_covid_ts )
+export( stanepi.infection_model )
 
 # required packages
 import( rstan )

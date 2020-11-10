@@ -8,18 +8,32 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{subfig}
+\renewcommand{\arraystretch}{1.5}
 
 \begin{document}
 Formulas for the documentation.
 \begin{equation}
-I_t = \sum_{k=1}^{t_g} I_{t-k} g_k
+I_t = R_t \sum_{k=1}^{t_g} I_{t-k} g_k
 \end{equation}
 \begin{equation}
-\log R_t = \log R_{t-1} + \sigma z_t
+\log R_t = \log R_{t-1} + \sigma_R z_t
 \end{equation}
 \begin{equation}
 C_t \sim {\rm NB}(I_t,\phi_{\rm od})
 \end{equation}
+
+\begin{table}[]
+\begin{tabular}{l|l|l|l}
+{\bf Description } & {\bf Model }&  {\bf Parameters } & {\bf  Priors  }  \\ \hline
+generation time & $g_t = f_{\Gamma}(t; \mu_g,\sigma_g)$ & $\mu_g$ - mean generation time  &  $\mu_g \sim U(\mu_{g,\rm min}, \mu_{g,\rm max}) $\\
+&  & $\sigma_g$ - s.d. generation time  & $\sigma_g \sim U(\sigma_{g,\rm min}, \sigma_{g,\rm max}) $ \\ \hline
+renewal equation & $I_t = R_t \sum\limits_{k=1}^{t_g} I_{t-k} g_k$  & & \\ \hline
+$R(t)$ process & $\log R_t = \log R_{t-1} + \sigma_R z_t$ & $\sigma_R$ - mean daily change in $\log R_t $& $\sigma_R \sim U(0.001,1)$ \\
+& & $R_0$ - initial value of R & $R_0 \sim U(R_{0,\rm min}, R_{0,\rm max})$ \\
+& & $z_t$ - daily change in $\log R_t $ & $z_t \sim N(0,1)$ i.i.d \\ \hline
+observed cases & $C_t \sim {\rm NB}(I_t,\phi_{\rm od})$ & $\phi_{\rm od}$ - observation over-dispersion & $\phi_{\rm od} \sim U(0,\phi_{\rm od,max})$
+\end{tabular}
+\end{table}
 
 
 \end{document}

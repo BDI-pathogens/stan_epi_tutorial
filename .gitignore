@@ -6,3 +6,8 @@ src/stan_files/*.o
 src/stan_files/*.hpp
 src/*.so
 notebooks/.ipynb_checkpoints/*
+.DS_store
+documentation/*.aux
+documentation/*.log
+documentation/*.pdf
+documentation/*.gz

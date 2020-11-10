@@ -1,12 +1,14 @@
 # constants exposed by package
 
 # functions exposed by package
+export( stanepi )
 
 # required packages
 import( rstan )
 import( Rcpp )
 import( rstantools )
 import( StanHeaders )
+import( data.table )
 
 # dynamic link for Rcpp
 useDynLib( stanEpiTutorial, .registration = TRUE )

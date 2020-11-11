@@ -14,3 +14,54 @@ The key features of STAN are:
 7. **Documentation/Community** - the Stan website (https://mc-stan.org/) contains extensive (500+ pages) of documentation and examples, showing you how to build models. Additionally, there are a large number of users worldwide, so Googling/StackOverflow etc.. will provide answers to your questions.
 
 [We will now build a model for estimating R(t) using a state-space model in Stan](https://github.com/BDI-pathogens/stan_epi_tutorial/edit/main/documentation/infection_model.md).
+
+## Compiling and Sampling Stan Models in R
+
+### Compiling
+Once you have written your Stan code in file (e.g. `my_model.stan`), they can be compiled by:
+1. **in-line** - call a function from the `rstan` package
+```
+library( rstan )
+model = stan_model( "my_model.stan" )
+```
+Note that the compilation of the model takes almost a minute, so once a model is developed then it is desirable not to need to recompile each time you need it.
+
+2. **R-package** - Stan models can be included as part of a R-package and are then just compiled once when the package is installed. This package is an example where the Stan model is part of the package, so if you want to develop your own package then copy this (it requires multiple files in the `\src`, `\tools` and `\R` directories). Each model must be declared in the `\src\Makevars` and `\src\Makevars.win` files
+```
+SOURCES = stan_files/my_model.stan
+```
+and can be called by functions in the package using
+```
+model [ stanmodels$my_model
+```
+### Samping / Optimisation
+Once the Stan model is compiled in Stan, then you can sample from its posterior using
+
+```
+samples = sampling( 
+  model,           # the compiled Stan model
+  data   = data,   # R list matching the data block in the Stan program
+  chains = 3,      # number of MCMC chains
+  cores  = 3,      # cores of computer to use
+  iter   = 3e2,    # total number of samples per chain
+  warmup = 1e2    # burn-in samples per chain
+)
+extract = extract( samples )
+```
+
+The return is an object and can be plotted directly e.g. `plot( samples )` and the extract is an object containing all the parameters values  for each sample.
+
+Alternatively the MAP estimate can be found by calling
+```
+MAP = optimizing( 
+  model,         # the compiled Stan model
+  data = data,   # R list matching the data block in the Stan program
+  init = init    # R list of initial parameter values from which to start optimization
+)
+```
+
+Both `sampling` and `optimizing` have many options which are described in detail in the on-line Stan [documentation](https://mc-stan.org/).
+
+## Installation
+This is a R package and during the package build the Stan code is compiled. To build this package, clone the repository and then call `R CMD INSTALL --no-multiarch --with-keep.source stan_epi_tutorial`. The package require `rstan`, `Rcpp`, `rstantools`, `StanHeaders`, `data.table` and `plotly` to be installed (all avaialbe on CRAN).
+

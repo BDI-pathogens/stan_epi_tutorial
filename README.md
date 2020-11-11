@@ -13,7 +13,7 @@ The key features of STAN are:
 6. **R Interface** - R contains an interface for Stan which allows for models to be written, built and run directly from R. Models can also be integrated in to R pacakges which mean that they are only compiled when the package is installed.
 7. **Documentation/Community** - the Stan website (https://mc-stan.org/) contains extensive (500+ pages) of documentation and examples, showing you how to build models. Additionally, there are a large number of users worldwide, so Googling/StackOverflow etc.. will provide answers to your questions.
 
-[We will now build a model for estimating R(t) using a state-space model in Stan](https://github.com/BDI-pathogens/stan_epi_tutorial/edit/main/documentation/infection_model.md).
+[We will now build a model for estimating R(t) using a state-space model in Stan](https://github.com/BDI-pathogens/stan_epi_tutorial/blob/main/documentation/infection_model.md).
 
 ## Compiling and Sampling Stan Models in R
 

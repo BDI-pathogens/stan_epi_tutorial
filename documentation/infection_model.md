@@ -30,7 +30,7 @@ The first *t<sub>g</sub>* case observations are used as the initial conditions f
 
 ## Stan Code
 
-We now build this model in Stan. Stan requires the model to be described in a specific format in a series of blocks. The blocks describe different parts of the model and are then re-interpretted by Stan to generate C++ code which is run. The blocks breaks the model up in to conceptually different parts. The Stan code is [here](./src/stan_files/infection_model.stan).
+We now build this model in Stan. Stan requires the model to be described in a specific format in a series of blocks. The blocks describe different parts of the model and are then re-interpretted by Stan to generate C++ code which is run. The blocks breaks the model up in to conceptually different parts. The Stan code is [here](../src/stan_files/infection_model.stan).
 
 ### data 
 The *data* block lists all the data inputs in to the model, such as observations and parameters in prior distribution. Every variable must be typed. For our model, the inputs are simply the observed number of cases *C<sub>t</sub>* and the parameters for the priors (see table).
@@ -138,11 +138,50 @@ model
 
 ## Results
 
-The model is fully implemented in this package and there is a [Jupyter notebook](./notebooks/infection_model.ipynb) from which you can run it. The observed data we use in this model is the [UK confirmed Covid casesd by specimen data](https://coronavirus.data.gov.uk/details/cases) and we use a rolling 1 week moving average to smooth out the weekend effect.
+The model is fully implemented in this package and there is a [Jupyter notebook](../notebooks/infection_model.ipynb) from which you can run it. The observed data we use in this model is the [UK confirmed Covid casesd by specimen data](https://coronavirus.data.gov.uk/details/cases) and we use a rolling 1 week moving average to smooth out the weekend effect.
 
 <p><img src="plot_uk_cases.png"  height="400"></p>
 
+The model can be sampled using Stan's MCMC method using the code
+```
+data = list(
+  t_max       = length( cases ), # total number of data points
+  obs_cases   = cases,           # observed cases
+  t_g         = 15,              # maximum time at which somebody can infect post-infection
+  mu_g_min    = 5,               # minimum for mean of generation time
+  mu_g_max    = 7,               # maximum for mean of generation time
+  sd_g_min    = 2.5,             # minimum for sd of generation time
+  sd_g_max    = 4,               # maximum for sd of generation time
+  R_0_min     = 0.5,             # minimum inital R
+  R_0_max     = 1.5,             # maximum inital R
+  sigma_R_max = 0.2,             # maximum of R daily change parameter
+  phi_od_max  = 10               # maximum of obersvation over dispersion paramenetr
+)
 
+model   = stanepi.infection_model()
+samples = sampling( 
+  model,           # the compiled R model
+  data = data,     # R list matching the data block in the Stan program
+  chains = 3,      # number of MCMC chaings
+  cores  = 3,      # cores of computer to use
+  iter   = 3e2,    # total number of samples per chain
+  warmup = 1e2,     # burn-in samples per chain,
+  control = list(max_treedepth = 15)
+)
+extract = extract( samples )
+```
+
+and then we can plot the posterior distrubtion of *R<sub>t</sub>*
+  
+<p><img src="plot_R.png"  height="400"></p>
+
+We can also look at the posterior of the other model parameters
+
+<p><img src="plot_posterior_params.png"  height="300"></p>
+
+and the time-series of the posterior of the daily *R* change factors  *z<sub>t</sub>* (note the prior on them *N(0,1)*)
+ 
+<p><img src="plot_posterior_z.png"  height="400"></p>
 
 
 

@@ -1,8 +1,10 @@
 # Bayesian State-Space Model for Estimating R(t)
 
-State-space models (also known as filters), are a class of models for analysing time-series data. The first state-space model was the Kalman filter, which was an measurement-error correction filter built for guidance systems in the Apollo space program. The basic idea of these models is that there are hidden variables which evolve according to a model and that these hidden variables are meaured by a noisy process.
+## Introduction
+State-space models (also known as filters), are a class of models used for analysing time-series data. The first state-space model was the Kalman filter, which was an measurement-error correction filter built for guidance systems in the Apollo space program. The basic idea is that there are hidden variables which represent a process and evolve according to a model. Observation of the system are made which are random variables parameterized by the hidden variables. The original Kalman filter is linear with normal random variables and can be solved very efficiently with some clever algorithms. However, modern computers allow us to model much more complex non-linear systems.
 
-Here we present a (simple) model of an infection process, using a state-space model. The observed data is the time-series of the number of cases (which use a proxy for infections, this is a simple model without ascertainment modelling). The hidden variables (both time-series) are:
+## Model
+Here we present a (simple) model of an infection process, using a state-space model. The observed data is the time-series of the number of cases (which we use a proxy for infections, this is a simple model without ascertainment modelling). The hidden variables (both time-series) are:
 1. Infections - the true number of people infected
 2. R - the reproduction number
 
@@ -21,5 +23,12 @@ We put priors on all the unknown parameters in the model. The table below descri
 <p><img src="model_table.png"  height="300"></p>
 
 The first *t<sub>g</sub>* case observations are used as the initial conditions for the infections in the renewal equation, therefore the initial time we estimate *R<sub>t</sub>* is at *t<sub>g</sub>+1*.
+
+## Stan Code
+
+We now build this model in Stan. Stan requires the model to be described in a specific format in a series of blocks. The blocks describe different parts of the model and are then re-interpretted by Stan to generate C++ code which is run. The blocks breaks the model up in to conceptually different parts. The Stan code is [here](./src/stan_files/infection_model.stan)
+
+### data 
+The data block lists all the data inputs in to the model, such as observations and parameters in prior distribution. Every variable must be typed. 
 
 

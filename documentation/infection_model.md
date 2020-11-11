@@ -1,9 +1,12 @@
 # Bayesian State-Space Model for Estimating R(t)
 
-## Introduction
-State-space models (also known as filters), are a class of models used for analysing time-series data. The first state-space model was the Kalman filter, which was an measurement-error correction filter built for guidance systems in the Apollo space program. The basic idea is that there are hidden variables which represent a process and evolve according to a model. Observation of the system are made which are random variables parameterized by the hidden variables. The original Kalman filter is linear with normal random variables and can be solved very efficiently with some clever algorithms. However, modern computers allow us to model much more complex non-linear systems.
+## Introduction - Kalman Filter
+State-space models (also known as filters), are a class of models used for analysing time-series data. The first state-space model was the Kalman filter, which was an measurement-error correction filter built for guidance systems in the Apollo space program. The basic idea is that there are hidden variables which represent a process and evolve according to a model. Observation of the system are made which are random variables parameterized by the hidden variables. The original Kalman filter is 
+<p><img src="formula_kalman.png"  height="80"></p>
 
-## Model
+where *x<sub>t</sub>* are the observed data and *y<sub>t</sub>* is the hidden variable (i.e. the true value without the measurement-error). The Kalman filter is both linear and with normal random variables and can be solved very efficiently with some clever algorithms. However, modern computers allow us to model much more complex non-linear systems.
+
+## Epidemic Model
 Here we present a (simple) model of an infection process, using a state-space model. The observed data is the time-series of the number of cases (which we use a proxy for infections, this is a simple model without ascertainment modelling). The hidden variables (both time-series) are:
 1. Infections - the true number of people infected
 2. R - the reproduction number

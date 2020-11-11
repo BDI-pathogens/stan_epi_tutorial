@@ -12,12 +12,14 @@ The number of infections are modelled using the renewal equation
 <p><img src="formula_generation.png"  height="80"></p>
 
 where *I<sub>t</sub>* are the number of infections and at time *t*; *R<sub>t</sub>* is the instanteous *R* at *t*; and *g<sub>t</sub>* is the generation time kernel (which we model with a gamma function). The value of *R* changes slowly with time, therefore an AR(1) model is a good candidate model. Since *R* is non-negative, and we expect the absolute value of *R* to change more slowly for small *R* , then we use a log-normal process to model *R*
-<p><img src="formula_R.png"  height="40"></p>
+<p><img src="formula_R.png"  height="50"></p>
 
 where *&#963;* is the daily variation in the underling *R*. Note, if *&#963;* is large then *R* will be very noisey (i.e. the case when observed cases = underlying infected) and if *&#963;* is very small than *R* is effectively a constant (i.e. the case of fitting a single *R* to all data). In this model *&#963;* is a parameter and we will sample it from the posterior distribution. Finally, the observed number of cases is modelled using a negative binomial distirbution
 <p><img src="formula_cases.png"  height="40"></p>
 
-We put priors on all the unknown parameters in the model. 
+We put priors on all the unknown parameters in the model. The table below describes the complete model.
+<p><img src="model_table.png"  height="300"></p>
 
+The first *t<sub>g</sub>* case observations are used as the initial conditions for the infections in the renewal equation, therefore the initial time we estimate *R<sub>t</sub>* is at *t<sub>g</sub>+1*.
 
 

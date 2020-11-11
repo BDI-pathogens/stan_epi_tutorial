@@ -107,7 +107,7 @@ transformed parameters{
 ### model
 The *model* block calculate the posterior likeilihood of the data. Both the likelihood of the data given the parmaeters and the prior likelihood of the parameters are included, given the posterior likeliohood is simply the product of the 2 they are not separated. The likelihoods can be specified in one two ways:
 1. Using built in distributions e.g. `z_t ~ N(0,1);`
-2. Specifiying the lok-likelihood directly e.g. `target += - dot_product( z_t, z_t ) * 0.5;`
+2. Specifiying the log-likelihood directly e.g. `target += - dot_product( z_t, z_t ) * 0.5;`
 
 ```
 model
@@ -130,11 +130,19 @@ model
 
   // priors (except range priors)
   z ~ normal( 0, 1);
-  //or likelihood can be add
+  //or log-likelihood can be add
   // target += -0.5 * dot_product( z, z);
 }
 
 ```
+
+## Results
+
+The model is fully implemented in this package and there is a [Jupyter notebook](./notebooks/infection_model.ipynb) from which you can run it. The observed data we use in this model is the [UK confirmed Covid casesd by specimen data](https://coronavirus.data.gov.uk/details/cases) and we use a rolling 1 week moving average to smooth out the weekend effect.
+
+<p><img src="plot_uk_cases.png"  height="400"></p>
+
+
 
 
 

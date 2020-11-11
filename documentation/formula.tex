@@ -22,13 +22,20 @@ I_t = R_t \sum_{k=1}^{t_g} I_{t-k} g_k
 C_t \sim {\rm NB}(I_t,\phi_{\rm od})
 \end{equation}
 
+\begin{equation}
+\begin{array}{rclcrcl}
+x_t &=& y_t + \epsilon_t &\quad {\rm where } \quad& \epsilon_t &\sim& N(0,\sigma^2_\epsilon) \quad {\rm{i.i.d.\ }} \\
+y_t &=& y_{t-1} + \mu_t &\quad {\rm where } \quad& \mu_t &\sim& N(0,\sigma^2_\mu) \quad {\rm{i.i.d.\ }}
+\end{array}
+\end{equation}
+
 \begin{table}[]
 \begin{tabular}{l|l|l|l}
 {\bf Description } & {\bf Model }&  {\bf Parameters } & {\bf  Priors  }  \\ \hline
 generation time & $g_t = f_{\Gamma}(t; \mu_g,\sigma_g)$ & $\mu_g$ - mean generation time  &  $\mu_g \sim U(\mu_{g,\rm min}, \mu_{g,\rm max}) $\\
 &  & $\sigma_g$ - s.d. generation time  & $\sigma_g \sim U(\sigma_{g,\rm min}, \sigma_{g,\rm max}) $ \\ \hline
 renewal equation & $I_t = R_t \sum\limits_{k=1}^{t_g} I_{t-k} g_k$  & & \\ \hline
-$R(t)$ process & $\log R_t = \log R_{t-1} + \sigma_R z_t$ & $\sigma_R$ - mean daily change in $\log R_t $& $\sigma_R \sim U(0.001,1)$ \\
+$R(t)$ process & $\log R_t = \log R_{t-1} + \sigma_R z_t$ & $\sigma_R$ - mean daily change in $\log R_t $& $\sigma_R \sim U(0.001,\sigma_{R,\rm max})$ \\
 & & $R_0$ - initial value of R & $R_0 \sim U(R_{0,\rm min}, R_{0,\rm max})$ \\
 & & $z_t$ - daily change in $\log R_t $ & $z_t \sim N(0,1)$ i.i.d \\ \hline
 observed cases & $C_t \sim {\rm NB}(I_t,\phi_{\rm od})$ & $\phi_{\rm od}$ - observation over-dispersion & $\phi_{\rm od} \sim U(0,\phi_{\rm od,max})$

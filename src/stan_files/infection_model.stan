@@ -5,7 +5,6 @@ data{
   int<lower=0> obs_cases[ t_max ]; // observed cases
 
   // parameters to define priors
-  int<lower=1> t_g;               // maximum time at which somebody can infect post-infection
   real mu_g_min;                  // minimum for mean of generation time
   real mu_g_max;                  // maximum for mean of generation time
   real sd_g_min;                  // minimum for sd of generation time
@@ -13,7 +12,8 @@ data{
   real R_0_min;                   // minimum inital R
   real R_0_max;                   // maximum inital R
   real sigma_R_max;               // maximum of R daily change parameter
-  real phi_od_max;                // maximum of obersvation over dispersion paramenetr
+  real phi_od_max;                // maximum of obersvation over dispersion parameter
+  int<lower=1> t_g;               // maximum time at which somebody can infect post-infection
 }
 
 // useful transformation of data which are calculated once
@@ -34,7 +34,7 @@ parameters{
   real<lower=0,upper=sigma_R_max> sigma_R;  // size of daily change in R
   real<lower=0.001,upper=phi_od_max> phi_od;// observation over-dispersion parameter
   real<lower=R_0_min,upper=R_0_max> R_0;    // initial value of R
-  real z[ t_used - 1 ];                     // daily increments of R
+  vector[ t_used - 1 ] z;                   // daily increments of R
 }
 
 // transformation of the priors (this code can be in the model section too
@@ -75,4 +75,6 @@ model
 
   // priors (except range priors)
   z ~ normal( 0, 1);
+  //or likilhood can be add
+  // target += -0.5 * dot_product( z, z);
 }

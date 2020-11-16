@@ -63,5 +63,5 @@ MAP = optimizing(
 Both `sampling` and `optimizing` have many options which are described in detail in the on-line Stan [documentation](https://mc-stan.org/).
 
 ## Installation
-This is a R package and during the package build the Stan code is compiled. To build this package, clone the repository and then call `R CMD INSTALL --no-multiarch --with-keep.source stan_epi_tutorial`. The package require `rstan`, `Rcpp`, `rstantools`, `StanHeaders`, `data.table` and `plotly` to be installed (all avaialbe on CRAN).
+This is a R package and during the package build the Stan code is compiled. To build this package, clone the repository and then call `R CMD INSTALL --no-multiarch --with-keep.source $FULL_PATH_REPO_DIR`, where `$FULL_PATH_REPO_DIR` is the full path to the directory where the respository was cloned to. The package require `rstan`, `Rcpp`, `rstantools`, `StanHeaders`, `data.table` and `plotly` to be installed (all avaialbe on CRAN).
 

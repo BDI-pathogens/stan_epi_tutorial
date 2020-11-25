@@ -3,6 +3,8 @@
 # functions exposed by package
 export( stanepi.uk_covid_ts )
 export( stanepi.infection_model )
+export( stanepi.test_sensitivity_model )
+export( stanepi.uk_kucharski_long_test )
 
 # required packages
 import( rstan )
@@ -10,6 +12,7 @@ import( Rcpp )
 import( rstantools )
 import( StanHeaders )
 import( data.table )
+import( plotly)
 
 # dynamic link for Rcpp
 useDynLib( stanEpiTutorial, .registration = TRUE )

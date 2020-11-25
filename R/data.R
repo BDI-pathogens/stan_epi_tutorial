@@ -13,3 +13,15 @@ stanepi.uk_covid_ts = function( start = as.Date( "2020-07-01" ), end = as.Date( 
   data[ , cases_1wMA := round( ( shift( cumsum( cases_raw), 3, type = "lead" ) - shift( cumsum( cases_raw), 4, type = "lag" ) ) / 7 ) ]
   return( data )
 }
+
+###################################################################################/
+# stanepi.uk_kucharski_long_test
+#
+# Data from kucharski paper with longitudinal testing
+###################################################################################/
+stanepi.uk_kucharski_long_test= function()
+{
+  file = system.file(  "Kucharski_normal.csv", package = "stanEpiTutorial")
+  data = fread( file )
+  return( data )
+}

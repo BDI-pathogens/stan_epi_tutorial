@@ -16,7 +16,7 @@ load( file_data )
 plot_ly( x = 1:data$tmax, y = data$observed, type = "scatter", mode = "points")
 
 # STEP2 - implement the Stan model and compile the code
-file_stan <- "hds_cdt/simple_model.stan"
+file_stan <- "hds_cdt/model.stan"
 model     <- stan_model( file_stan )
 
 # STEP3 - build the input data

@@ -9,7 +9,7 @@ library( plotly )
 library( matrixStats )
 
 # load the data to model
-file_data <- "hds_cdt/data/task1.R"
+file_data <- "hds_cdt/data/task1a.RData"
 load( file_data )
 
 # STEP1 - plot the observed data
@@ -27,7 +27,7 @@ stan_data <- list(
   tmax = tmax,
   observed = data$observed[1:tmax],
   prior_R0_min       = 1,
-  prior_R0_max       = 2.5,
+  prior_R0_max       = 3,
   prior_infections0_min   = 0.5,
   prior_infections0_max   = 10,
   prior_sigma_dR_max = 0.15

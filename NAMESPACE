@@ -9,6 +9,8 @@ export( stanepi.uk_kucharski_long_test )
 # required packages
 import( rstan )
 import( Rcpp )
+import( RcppEigen )
+import( RcppParallel )
 import( rstantools )
 import( StanHeaders )
 import( data.table )

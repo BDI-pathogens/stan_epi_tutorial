@@ -1,13 +1,13 @@
 data
 {
   int<lower=0> N;
-  int days_since_onset[N];
-  int<lower=0> pcr_result[N];
+  array[N] int days_since_onset;
+  array[N]int<lower=0> pcr_result;
 }
 
 transformed data
 {
-  int adj_days[N];
+  array[N] int adj_days;
   int min_days;
   int max_days;
   int total_days;
@@ -31,7 +31,7 @@ parameters
 
 transformed parameters
 {
-  real<lower=0> sensitivity[ total_days ];
+  array[ total_days ] real<lower=0> sensitivity;
   real z;
   real factor;
 

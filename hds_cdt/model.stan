@@ -2,9 +2,9 @@ data {
   int<lower=0> t1;
   int<lower=0> t2;
   int<lower=0> tmax;
-  int observed[tmax];
+  array[tmax] int observed;
   real prior_R0_min;
-  real prior_R0_max;
+    real prior_R0_max;
   real prior_infections0_min;
   real prior_infections0_max;
   real prior_sigma_dR_max;
@@ -14,12 +14,12 @@ parameters {
   real<lower=prior_infections0_min,upper=prior_infections0_max> infections0;
   real<lower=prior_R0_min,upper=prior_R0_max> R0;
   real<lower=0,upper=prior_sigma_dR_max> sigma_dR;
-  real<lower=-prior_sigma_dR_max*4,upper=prior_sigma_dR_max*4> dR[tmax];
+  array[tmax] real<lower=-prior_sigma_dR_max*4,upper=prior_sigma_dR_max*4> dR;
 }
 
 transformed parameters {
-  real R[tmax];
-  real infections[tmax+t2];
+  array[tmax] real R;
+  array[tmax+t2] real infections;
   real new_infections;
 
   // calculate R

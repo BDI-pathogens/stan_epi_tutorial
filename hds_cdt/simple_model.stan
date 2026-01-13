@@ -9,7 +9,7 @@ data {
  int<lower=0> n1;
 
  // An array called my_array of n1 intergers
- int my_array[n1];
+ array[n1] int my_array;
 }
 
 parameters {
@@ -20,7 +20,7 @@ parameters {
   real<lower=0,upper=r1> p1;
 
   // An array of reals called p_array of n1 values between 0 and r1
-  real<lower=0,upper=r1> p_array[n1];
+  array[n1] real<lower=0,upper=r1> p_array;
 }
 
 transformed parameters {
@@ -28,7 +28,7 @@ transformed parameters {
   // Examples - a simple randomw walk
 
   // An array of reals called walk and length n1
-  real walk[n1];
+  array[n1] real walk;
 
   walk[1] = p1;
   for( idx in 2:n1 )

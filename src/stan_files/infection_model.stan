@@ -2,7 +2,7 @@
 data{
   // observed data
   int<lower=1> t_max;              // total number of data points
-  int<lower=0> obs_cases[ t_max ]; // observed cases
+  array[ t_max ] int<lower=0> obs_cases; // observed cases
 
   // parameters to define priors
   real mu_g_min;                  // minimum for mean of generation time
@@ -19,7 +19,7 @@ data{
 // useful transformation of data which are calculated once
 transformed data{
   int t_used = t_max - t_g;         // the number of data points estimated
-  int obs_cases_used[ t_used ];     // the observed cases which we fit to
+  array[ t_used ] int obs_cases_used;     // the observed cases which we fit to
   vector[ t_used ] ones_t_used;     // a vector of ones of size t_used
 
   obs_cases_used = obs_cases[ (t_g+1):t_max ];
@@ -42,8 +42,8 @@ transformed parameters{
   // calculate the kernel for the generation equation based on the sampled params
   real alpha_g = mu_g * mu_g / sd_g / sd_g;
   real beta_g  = mu_g / sd_g / sd_g;
-  real g[ t_g ];
-  real R[ t_used ];
+  array[ t_g ] real g;
+  array[ t_used ] real R;
 
   for( t in 1:t_g )
     g[t] = exp( gamma_lpdf( t | alpha_g, beta_g ) );
@@ -59,7 +59,7 @@ model
 {
   // calculate the time-series for the (hidden) number of infected people
   real expected;
-  real infected[t_max];
+  array[t_max] real infected;
   for( t in 1:t_g )
     infected[t] = obs_cases[t];
   for( t in (t_g+1):t_max )
